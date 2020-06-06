@@ -1,4 +1,5 @@
 from discord.ext import commands, tasks
+from api import admin
 from contextlib import redirect_stdout
 from utils import send_embed
 import os
@@ -38,14 +39,11 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
     async def load(self, ctx, module:str, opt:str = None):
         module = f'cogs.{module}'
         if opt is None:
-            self.bot.load_extension(module)
+            admin.func_load(module)
  
         elif opt == 'un':
-            self.bot.unload_extension(module)
- 
-        elif opt == 're':
-            self.bot.reload_extension(module)
- 
+            admin.func_unload(module)
+
         else:
             return await ctx.message.add_reaction('\N{BLACK QUESTION MARK ORNAMENT}')
         
