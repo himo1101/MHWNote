@@ -64,7 +64,7 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
    
  
     @commands.command()
-    async def cp(self, ctx, member=None, channel = None):
+    async def cp(self, ctx, member: discord.Member = None, channel: discord.TextChannel = None):
         admin.permissions(member, channel)
  
     @commands.command(aliases = ['role_list'])
