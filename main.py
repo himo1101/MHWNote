@@ -7,7 +7,7 @@ class MIB(commands.Cog):
         super().__init__(command_prefix = 'm:', description = botinfo.description, help_attrs=dict(hidden=True))
 
         self.token = botinfo.token
-        self.load_extension(f"cogs.event.start")
+        self.load_extension(f"cogs.start")
  
  
     def default_embed(self, mes: str):
@@ -34,6 +34,6 @@ class MIB(commands.Cog):
         loop.close()
  
 if __name__ == '__main__':
-    bot = ERP()
+    bot = MIB()
     bot.main()
  
