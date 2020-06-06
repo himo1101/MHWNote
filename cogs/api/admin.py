@@ -35,7 +35,7 @@ async def say_permissions(ctx, member, channel):
         await ctx.send(embed=e)
 
     
-async def permissions(self, ctx, member: discord.Member = None, channel: discord.TextChannel = None):
+async def permissions(ctx, member: discord.Member = None, channel: discord.TextChannel = None):
     channel = channel or ctx.channel
     if member is None:
         member = ctx.author
