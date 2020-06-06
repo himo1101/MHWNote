@@ -39,10 +39,10 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
     async def load(self, ctx, module:str, opt:str = None):
         module = f'cogs.{module}'
         if opt is None:
-            admin.func_load(module)
+            admin.func_load(bot, module)
  
         elif opt == 'un':
-            admin.func_unload(module)
+            admin.func_unload(bot, module)
 
         else:
             return await ctx.message.add_reaction('\N{BLACK QUESTION MARK ORNAMENT}')
@@ -52,8 +52,7 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
         
     @commands.command()
     async def restart(self, ctx):
-        os.system('cals')
-        subprocess.run("main.py", shell=True)
+        admin.restart()
  
     
     @commands.command(aliases = ['sn'])
@@ -62,39 +61,11 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
         e = send_embed.defemb(ctx, contents)
         await target.send('@everyone\n', embed = e)
  
-    async def say_permissions(self, ctx, member):
-        permissions = member.guild_permissions
-        e = discord.Embed(colour=member.colour)
-        avatar = member.avatar_url_as(static_format='png')
-        e.set_author(name=str(member), url=avatar)
-        allowed, denied = [], []
-        for name, value in permissions:
-            name = name.replace('_', ' ').replace('guild', 'server').title()
-            if value:
-                allowed.append(name)
-            else:
-                denied.append(name)
- 
-        e.add_field(name='Allowed', value='\n'.join(allowed))
-        e.add_field(name='Denied', value='\n'.join(denied))
-        await ctx.send(embed=e)
+   
  
     @commands.command()
-    async def cp(self, ctx):
-        """Shows a member's permissions in a specific channel.
-        If no channel is given then it uses the current one.
-        You cannot use this in private messages. If no member is given then
-        the info returned will be yours.
-        """
-        guild = self.bot.get_guild(619926767821652000)
-        channel = self.bot.get_channel(650399901284565023)
-        member = ctx.guild.me
- 
-        await self.say_permissions(ctx, member)
- 
-    @cp.error
-    async def load_error(self, ctx, error):
-        await ctx.send(f'```py\n{traceback.format_exc()}\n```')
+    async def cp(self, ctx, member=None, channel = None):
+        admin.permissions(member, channel)
  
     @commands.command(aliases = ['role_list'])
     async def _list(self, ctx):
