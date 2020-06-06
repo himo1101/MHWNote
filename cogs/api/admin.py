@@ -1,5 +1,5 @@
 from discord.ext import commands
-import os, subprocess
+import os, subprocess, discord
 def func_load(bot, module: str):
     module = 'cogs.{module}'
     try:
